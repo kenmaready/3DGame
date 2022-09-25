@@ -48,8 +48,8 @@ class Enemy: SCNNode {
                 self.position = SCNVector3Make(0, 15.0, 60.0)
             }
             
-//            _currentScene.score += 1
-//            _currentScene.skScene.myLabel.text = "Score: \(_currentScene.score)"
+            _currentScene.score += 1
+            _currentScene.skScene.myLabel.text = "Score: \(_currentScene.score)"
         }
     }
     

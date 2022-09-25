@@ -7,12 +7,17 @@
 
 import UIKit
 import SceneKit
+import SpriteKit
 
 class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
     var scnView: SCNView!
     var _size: CGSize!
     var hero: Hero!
     var enemy: Enemy!
+    var skScene: OverlaySKScene!
+    
+    var score: Int = 0
+    var gameOver: Bool = true
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented.")
@@ -42,11 +47,50 @@ class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
         self.physicsWorld.gravity = SCNVector3(0, -500, 3)
         self.physicsWorld.contactDelegate = self
         scnView.debugOptions = SCNDebugOptions.showPhysicsShapes
+        
+        skScene = OverlaySKScene(size: _size, gameScene: self)
+        scnView.overlaySKScene = skScene
+        skScene.scaleMode = SKSceneScaleMode.fill
     }
     
     func update() {
         hero.update()
-        enemy.update()
+        if !gameOver {
+            enemy.update()
+        }
+    }
+    
+    func heroJump() {
+        hero.jump()
+    }
+    
+    func startGame() {
+        gameOver = false
+        skScene.jumpBtn.isHidden = false
+        skScene.myLabel.isHidden = false
+        skScene.playBtn.isHidden = true
+        skScene.gameOverLabel.isHidden = true
+        
+        score = 0
+        skScene.myLabel.text = "Score: \(score)"
+    }
+    
+    func GameOver() {
+        gameOver = true
+        
+        skScene.jumpBtn.isHidden = true
+        skScene.playBtn.isHidden = false
+        skScene.gameOverLabel.isHidden = false
+        
+        enemy.position = SCNVector3Make(0, 2.0, 60.0)
+        hero.position = SCNVector3Make(0, 0, 0)
+    }
+    
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        if (contact.nodeA.name == "hero" && contact.nodeB.name == "enemy") {
+            contact.nodeA.physicsBody?.velocity = SCNVector3Zero
+            GameOver()
+        }
     }
     
     func addGeometryNode() {
