@@ -14,6 +14,9 @@
 		9BA3C08528E0B07200835E01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9BA3C08428E0B07200835E01 /* Assets.xcassets */; };
 		9BA3C08828E0B07200835E01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BA3C08628E0B07200835E01 /* LaunchScreen.storyboard */; };
 		9BA3C08F28E0B13B00835E01 /* GameSCNScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C08E28E0B13B00835E01 /* GameSCNScene.swift */; };
+		9BA3C09128E0BC1800835E01 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C09028E0BC1800835E01 /* Hero.swift */; };
+		9BA3C09328E0C18700835E01 /* PhysicsCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C09228E0C18700835E01 /* PhysicsCategory.swift */; };
+		9BA3C09528E0D7DF00835E01 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3C09428E0D7DF00835E01 /* Enemy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,9 @@
 		9BA3C08428E0B07200835E01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9BA3C08728E0B07200835E01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9BA3C08E28E0B13B00835E01 /* GameSCNScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSCNScene.swift; sourceTree = "<group>"; };
+		9BA3C09028E0BC1800835E01 /* Hero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hero.swift; sourceTree = "<group>"; };
+		9BA3C09228E0C18700835E01 /* PhysicsCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsCategory.swift; sourceTree = "<group>"; };
+		9BA3C09428E0D7DF00835E01 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,13 +63,16 @@
 		9BA3C07A28E0B07000835E01 /* 3DGame */ = {
 			isa = PBXGroup;
 			children = (
-				9BA3C07B28E0B07000835E01 /* AppDelegate.swift */,
 				9BA3C07D28E0B07000835E01 /* art.scnassets */,
+				9BA3C07B28E0B07000835E01 /* AppDelegate.swift */,
+				9BA3C09428E0D7DF00835E01 /* Enemy.swift */,
+				9BA3C08E28E0B13B00835E01 /* GameSCNScene.swift */,
 				9BA3C07F28E0B07000835E01 /* GameViewController.swift */,
-				9BA3C08128E0B07000835E01 /* Main.storyboard */,
+				9BA3C09028E0BC1800835E01 /* Hero.swift */,
+				9BA3C09228E0C18700835E01 /* PhysicsCategory.swift */,
 				9BA3C08428E0B07200835E01 /* Assets.xcassets */,
 				9BA3C08628E0B07200835E01 /* LaunchScreen.storyboard */,
-				9BA3C08E28E0B13B00835E01 /* GameSCNScene.swift */,
+				9BA3C08128E0B07000835E01 /* Main.storyboard */,
 			);
 			path = 3DGame;
 			sourceTree = "<group>";
@@ -142,7 +151,10 @@
 			files = (
 				9BA3C08028E0B07000835E01 /* GameViewController.swift in Sources */,
 				9BA3C08F28E0B13B00835E01 /* GameSCNScene.swift in Sources */,
+				9BA3C09528E0D7DF00835E01 /* Enemy.swift in Sources */,
+				9BA3C09328E0C18700835E01 /* PhysicsCategory.swift in Sources */,
 				9BA3C07C28E0B07000835E01 /* AppDelegate.swift in Sources */,
+				9BA3C09128E0BC1800835E01 /* Hero.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

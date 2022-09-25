@@ -8,9 +8,11 @@
 import UIKit
 import SceneKit
 
-class GameSCNScene: SCNScene {
+class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
     var scnView: SCNView!
     var _size: CGSize!
+    var hero: Hero!
+    var enemy: Enemy!
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented.")
@@ -29,8 +31,22 @@ class GameSCNScene: SCNScene {
         self.addGeometryNode()
         self.addLightSourceNode()
         self.addCameraNode()
-        self.addFloorNode()
-        self.addTheDude()
+        self.addGround()
+//        self.addFloorNode()
+        
+        self.hero = Hero(currentScene: self)
+        hero.position = SCNVector3Make(0, 5, 0)
+        
+        self.enemy = Enemy(currentScene: self)
+        
+        self.physicsWorld.gravity = SCNVector3(0, -500, 3)
+        self.physicsWorld.contactDelegate = self
+        scnView.debugOptions = SCNDebugOptions.showPhysicsShapes
+    }
+    
+    func update() {
+        hero.update()
+        enemy.update()
     }
     
     func addGeometryNode() {
@@ -59,7 +75,9 @@ class GameSCNScene: SCNScene {
     func addCameraNode() {
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 0, y: 40, z: 100)
+//        cameraNode.position = SCNVector3(x: 0, y: 40, z: 100)
+        cameraNode.position = SCNVector3(x: -30, y: 5, z: 12)
+        cameraNode.eulerAngles.y -= Float(Double.pi/2)
         self.rootNode.addChildNode(cameraNode)
     }
     
@@ -70,10 +88,19 @@ class GameSCNScene: SCNScene {
         self.rootNode.addChildNode(floorNode)
     }
     
-    func addTheDude() {
-        let monsterScene: SCNScene = SCNScene(named: "art.scnassets/theDude.DAE")!
-        let monsterNode = monsterScene.rootNode.childNode(withName: "CATRigHub001", recursively: false)!
-        self.rootNode.addChildNode(monsterNode)
+    func addGround() {
+        let groundBox = SCNBox(width: 10, height: 2, length: 10, chamferRadius: 0)
+        let groundNode = SCNNode(geometry: groundBox)
+        
+        groundNode.position = SCNVector3Make(0, -1.01, 0)
+        groundNode.physicsBody = SCNPhysicsBody.static()
+        groundNode.physicsBody?.restitution = 0.0
+        groundNode.physicsBody?.friction = 1.0
+        groundNode.physicsBody?.categoryBitMask = PhysicsCategory.ground.rawValue
+        groundNode.physicsBody?.contactTestBitMask = PhysicsCategory.hero.rawValue
+        
+        groundNode.name = "ground"
+        self.rootNode.addChildNode(groundNode)
     }
     
 }
