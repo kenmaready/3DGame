@@ -15,6 +15,7 @@ class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
     var hero: Hero!
     var enemy: Enemy!
     var skScene: OverlaySKScene!
+    var scrollingBackground = ScrollingBackground()
     
     var score: Int = 0
     var gameOver: Bool = true
@@ -33,11 +34,9 @@ class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
         scnView.showsStatistics = true
         scnView.backgroundColor = UIColor.systemBlue
         
-        self.addGeometryNode()
         self.addLightSourceNode()
         self.addCameraNode()
         self.addGround()
-//        self.addFloorNode()
         
         self.hero = Hero(currentScene: self)
         hero.position = SCNVector3Make(0, 5, 0)
@@ -51,10 +50,20 @@ class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
         skScene = OverlaySKScene(size: _size, gameScene: self)
         scnView.overlaySKScene = skScene
         skScene.scaleMode = SKSceneScaleMode.fill
+        self.scrollingBackground.create(currentScene: self)
+        
+        let rain = SCNParticleSystem(named: "rain", inDirectory: nil)
+        rain!.warmupDuration = 10
+        
+        let particleEmitterNode = SCNNode()
+        particleEmitterNode.position = SCNVector3(0, 100, 0)
+        particleEmitterNode.addParticleSystem(rain!)
+        self.rootNode.addChildNode(particleEmitterNode)
     }
     
     func update() {
         hero.update()
+        scrollingBackground.update()
         if !gameOver {
             enemy.update()
         }
@@ -91,15 +100,6 @@ class GameSCNScene: SCNScene, SCNPhysicsContactDelegate {
             contact.nodeA.physicsBody?.velocity = SCNVector3Zero
             GameOver()
         }
-    }
-    
-    func addGeometryNode() {
-        let sphereGeometry = SCNSphere(radius: 1.0)
-        sphereGeometry.firstMaterial?.diffuse.contents = UIColor.orange
-        
-        let sphereNode = SCNNode(geometry: sphereGeometry)
-        sphereNode.position = SCNVector3Make(0.0, 0.0, 0.0)
-        self.rootNode.addChildNode(sphereNode)
     }
     
     func addLightSourceNode() {
